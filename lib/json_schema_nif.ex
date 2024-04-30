@@ -6,9 +6,15 @@ defmodule JsonSchemaNif do
   leveraging Rust's performance for efficient JSON validation.
   """
 
-  # version = Mix.Project.config()[:version]
+  version = Mix.Project.config()[:version]
 
-  use Rustler, otp_app: :json_schema_nif, crate: "json_schema_nif"
+  use RustlerPrecompiled,
+    otp_app: :json_schema_nif,
+    crate: "json_schema_nif",
+    version: version,
+    base_url: "https://github.com/podium/json_schema_nif/releases/download/v#{version}",
+    force_build: System.get_env("RUSTLER_PRECOMPILATION_FORCE_BUILD") in ["1", "true"],
+    targets: RustlerPrecompiled.Config.default_targets()
 
   @doc """
   Validates a JSON instance against a JSON schema.
