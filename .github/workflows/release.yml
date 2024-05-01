@@ -7,7 +7,7 @@ on:
       - master
   push:
     branches:
-      - main
+      - master
     tags:
       - "*"
 
