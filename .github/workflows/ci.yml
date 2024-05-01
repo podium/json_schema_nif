@@ -1,4 +1,4 @@
-name: CI
+name: Elixir CI
 
 on:
   pull_request:
@@ -35,6 +35,9 @@ jobs:
         with:
           otp-version: ${{matrix.otp_version}}
           elixir-version: ${{matrix.elixir_version}}
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
 
       - uses: actions/cache@v4
         with:

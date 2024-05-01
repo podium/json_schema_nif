@@ -16,7 +16,11 @@ That said, contributions (especially bug fixes!) are welcome. To contribute:
 
 Build dependencies:
 
+1. Elixir toolchain (default to asdf installation)
 1. Rust toolchain
+
+To force a compilation of the Rust portions locally, instead of relying
+on pre-built artifacts, set `RUSTLER_PRECOMPILATION_FORCE_BUILD=true`.
 
 ```bash
 cd native/json_schema_nif/

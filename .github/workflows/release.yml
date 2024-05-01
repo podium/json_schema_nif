@@ -1,4 +1,4 @@
-name: Build precompiled NIFs
+name: Build Precompiled NIFs
 # lifted from: https://github.com/philss/rustler_precompilation_example/blob/main/.github/workflows/release.yml
 
 on:
