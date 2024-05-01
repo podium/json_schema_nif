@@ -10,7 +10,7 @@ on:
 
 jobs:
   setup:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     env:
       MIX_ENV: test
       RUSTLER_PRECOMPILATION_FORCE_BUILD: true
@@ -18,7 +18,6 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-22.04, ubuntu-20.04]
         elixir_version: [1.15]
         otp_version: [24, 25, 26]
         exclude:
