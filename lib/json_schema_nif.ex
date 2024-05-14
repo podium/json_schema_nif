@@ -28,13 +28,13 @@ defmodule JsonSchemaNif do
 
   ## Returns
 
-  Returns `{:ok, :matches_schema}` if the JSON instance matches the schema, `{:error, :violates_schema}` if it violates
+  Returns `:ok` if the JSON instance matches the schema, `{:error, :violates_schema}` if it violates
   the schema, or an appropriate error tuple for other failure modes.
 
   ## Examples
 
       iex> JsonSchemaNif.validate_json("{\\"name\\":\\"John\\"}", "{\\"type\\":\\"object\\"}")
-      {:ok, :matches_schema}
+      :ok
 
       iex> JsonSchemaNif.validate_json("{\\"age\\":30}", "{\\"type\\":\\"string\\"}")
       {:error, :violates_schema}
@@ -44,7 +44,7 @@ defmodule JsonSchemaNif do
   This function will raise an error if the NIF is not loaded, which typically indicates
   a compilation or deployment issue with the Rust code.
   """
-  @spec validate_json(binary, binary) :: {:ok, :matches_schema} | {:error, atom()}
+  @spec validate_json(binary, binary) :: :ok | {:error, atom()}
   def validate_json(instance, schema) when is_binary(instance) and is_binary(schema),
     do: nif_not_loaded()
 

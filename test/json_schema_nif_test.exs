@@ -7,7 +7,7 @@ defmodule JsonSchemaNifTest do
     test "validates a matching JSON instance and schema" do
       instance = "{\"name\":\"John\"}"
       schema = "{\"type\":\"object\"}"
-      assert {:ok, :matches_schema} = JsonSchemaNif.validate_json(instance, schema)
+      assert :ok = JsonSchemaNif.validate_json(instance, schema)
     end
 
     test "returns error for a non-matching JSON instance and schema" do

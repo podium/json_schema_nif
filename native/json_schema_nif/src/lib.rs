@@ -6,15 +6,49 @@
 extern crate log;
 
 use jsonschema::is_valid;
-use rustler::Atom;
 use serde_json::Value;
 
 mod atoms {
     rustler::atoms! {
         bad_instance,
         bad_schema,
-        matches_schema,
         violates_schema
+    }
+}
+
+enum ValidationResult {
+    Ok,
+    BadInstance,
+    BadSchema,
+    ViolatesSchema,
+}
+
+impl rustler::Encoder for ValidationResult {
+    fn encode<'a>(&self, env: rustler::Env<'a>) -> rustler::Term<'a> {
+        match self {
+            ValidationResult::Ok => rustler::types::atom::ok().encode(env),
+            ValidationResult::BadInstance => rustler::types::tuple::make_tuple(
+                env,
+                &[
+                    rustler::types::atom::error().encode(env),
+                    atoms::bad_instance().encode(env),
+                ],
+            ),
+            ValidationResult::BadSchema => rustler::types::tuple::make_tuple(
+                env,
+                &[
+                    rustler::types::atom::error().encode(env),
+                    atoms::bad_schema().encode(env),
+                ],
+            ),
+            ValidationResult::ViolatesSchema => rustler::types::tuple::make_tuple(
+                env,
+                &[
+                    rustler::types::atom::error().encode(env),
+                    atoms::violates_schema().encode(env),
+                ],
+            ),
+        }
     }
 }
 
@@ -25,17 +59,17 @@ mod atoms {
 /// * `schema` - A string representation of the JSON schema against which the instance is validated.
 ///
 /// # Returns
-/// * `Ok(atoms::matches_schema())` if the instance matches the schema.
-/// * `Err(atoms::violates_schema())` if the instance does not match the schema.
-/// * `Err(atoms::bad_instance())` if the instance string cannot be parsed as JSON.
-/// * `Err(atoms::bad_schema())` if the schema string cannot be parsed as JSON.
+/// * `ValidationResult::Ok` if the instance matches the schema.
+/// * `ValidationResult::ViolatesSchema` if the instance does not match the schema.
+/// * `ValidationResult::BadInstance` if the instance string cannot be parsed as JSON.
+/// * `ValidationResult::BadSchema` if the schema string cannot be parsed as JSON.
 #[rustler::nif]
-fn validate_json(instance: String, schema: String) -> Result<Atom, Atom> {
+fn validate_json(instance: String, schema: String) -> ValidationResult {
     let instance_value = match serde_json::from_str::<Value>(&instance) {
         Ok(val) => val,
         Err(err) => {
             error!("Failed to parse JSON: {:?}", err);
-            return Err(atoms::bad_instance());
+            return ValidationResult::BadInstance;
         }
     };
 
@@ -43,18 +77,18 @@ fn validate_json(instance: String, schema: String) -> Result<Atom, Atom> {
         Ok(val) => val,
         Err(err) => {
             error!("Failed to parse schema: {:?}", err);
-            return Err(atoms::bad_schema());
+            return ValidationResult::BadSchema;
         }
     };
 
     if is_valid(&schema_value, &instance_value) {
-        return Ok(atoms::matches_schema());
+        ValidationResult::Ok
     } else {
         debug!(
             "JSON instance does not match schema:\nInstance: {:?}\nSchema: {:?}",
             &instance_value, &schema_value
         );
-        return Err(atoms::violates_schema());
+        ValidationResult::ViolatesSchema
     }
 }
 
