@@ -34,7 +34,7 @@ cargo build --target aarch64-apple-darwin --release
 cargo build --target x86_64-apple-darwin --release
 ```
 
-To generate the checksum file **after** the NIF files have been uploaded to GitLab,
+To generate the checksum file **after** the NIF files have been uploaded to GitHub,
 run: `mix rustler_precompiled.download JsonSchemaNif --only-local`.
 
 These files are required as part of the Hex package, but don't need to be tracked in VCS.
