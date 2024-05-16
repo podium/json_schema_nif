@@ -33,7 +33,3 @@ defmodule :_util do
 end
 
 import :_util
-
-# ---
-
-alias JsonSchemaNif
