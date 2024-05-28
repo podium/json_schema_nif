@@ -1,0 +1,55 @@
+name: Elixir CI
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    env:
+      MIX_ENV: test
+      RUSTLER_PRECOMPILATION_FORCE_BUILD: true
+
+    strategy:
+      fail-fast: false
+      matrix:
+        elixir_version: [1.15, 1.16]
+        otp_version: [25, 26]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: ${{matrix.otp_version}}
+          elixir-version: ${{matrix.elixir_version}}
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@stable
+
+      - uses: actions/cache@v4
+        with:
+          path: |
+            deps
+            _build
+          key: deps-${{ runner.os }}-${{ matrix.otp_version }}-${{ matrix.elixir_version }}-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            deps-${{ runner.os }}-${{ matrix.otp_version }}-${{ matrix.elixir_version }}
+
+      - run: mix deps.get
+
+      - run: mix format --check-formatted
+
+      - run: mix deps.unlock --check-unused
+
+      - run: mix deps.compile
+
+      - run: mix compile --warnings-as-errors
+
+      - run: mix credo --strict --format=oneline
+
+      - run: mix test --warnings-as-errors --cover
