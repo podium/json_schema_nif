@@ -1,6 +1,7 @@
 defmodule JsonSchemaNif.MixProject do
   use Mix.Project
 
+  @version "0.1.1"
   @project_url "https://github.com/podium/json_schema_nif"
 
   def project do
@@ -8,7 +9,7 @@ defmodule JsonSchemaNif.MixProject do
       app: :json_schema_nif,
       name: "JSON Schema NIF",
       description: "A JSON Schema Validator via NIF bindings to Rust",
-      version: "0.1.0",
+      version: @version,
       elixir: "~> 1.15",
       start_permanent: Mix.env() == :prod,
       deps: deps(),

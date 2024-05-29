@@ -7,6 +7,11 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.1.1] 2024-05-28
+
+Fix bug where `version` key needed to be set as module attribute `@version`
+for `sed` to find it.
+
 ## [0.1.0] - 2024-05-15
 
 Initial release.
