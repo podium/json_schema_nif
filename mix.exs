@@ -46,7 +46,7 @@ defmodule JsonSchemaNif.MixProject do
       {:rustler_precompiled, "~> 0.7"},
 
       # test
-      {:mix_test_watch, "~> 1.1.1", only: [:dev, :test], runtime: false},
+      {:mix_test_watch, "~> 1.2.0", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.30", only: :dev, runtime: false},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
