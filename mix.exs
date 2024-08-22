@@ -15,7 +15,11 @@ defmodule JsonSchemaNif.MixProject do
       deps: deps(),
       aliases: aliases(),
       package: package(),
-      test_coverage: [summary: [threshold: 33.33]]
+      test_coverage: [summary: [threshold: 33.33]],
+      dialyzer: [
+        plt_add_apps: [:mix],
+        ignore_warnings: ".dialyzer.ignore-warnings"
+      ]
     ]
   end
 
@@ -48,7 +52,8 @@ defmodule JsonSchemaNif.MixProject do
       # test
       {:mix_test_watch, "~> 1.2.0", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.30", only: :dev, runtime: false},
-      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false}
     ]
   end
 

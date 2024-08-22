@@ -510,7 +510,7 @@ dependencies = [
 
 [[package]]
 name = "json_schema_nif"
-version = "0.1.0"
+version = "0.1.1"
 dependencies = [
  "jsonschema",
  "log",
