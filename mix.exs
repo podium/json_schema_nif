@@ -19,7 +19,7 @@ defmodule JsonSchemaNif.MixProject do
       dialyzer: [
         plt_add_apps: [:mix],
         ignore_warnings: ".dialyzer.ignore-warnings"
-      ],
+      ]
     ]
   end
 
