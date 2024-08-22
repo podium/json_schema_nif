@@ -11,6 +11,9 @@ on:
     tags:
       - "*"
 
+env:
+  RUST_TOOLCHAIN_VERSION: 1.78.0
+
 jobs:
   build_release:
     name: NIF ${{ matrix.nif }} - ${{ matrix.job.target }} (${{ matrix.job.os }})
@@ -64,7 +67,7 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
         with:
-          toolchain: 1.78.0
+          toolchain: $RUST_TOOLCHAIN_VERSION
           target: ${{ matrix.job.target }}
 
       - name: Build the project
