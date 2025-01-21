@@ -46,7 +46,7 @@ defmodule JsonSchemaNif.MixProject do
 
   defp deps do
     [
-      {:rustler, "~> 0.35.0", optional: true},
+      {:rustler, "~> 0.36.0", optional: true},
       {:rustler_precompiled, "~> 0.7"},
 
       # test
