@@ -12,7 +12,7 @@ on:
       - "*"
 
 env:
-  RUST_TOOLCHAIN_VERSION: 1.78.0
+  RUST_TOOLCHAIN_VERSION: 1.94.1
 
 jobs:
   build_release:
