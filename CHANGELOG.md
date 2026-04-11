@@ -7,6 +7,10 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## 0.2.0 2026-04-11
+
+Update rust dependencies and configuration for recent versions of rustler.
+
 ## [0.1.1] 2024-05-28
 
 Fix bug where `version` key needed to be set as module attribute `@version`

@@ -1,7 +1,7 @@
 defmodule JsonSchemaNif.MixProject do
   use Mix.Project
 
-  @version "0.1.1"
+  @version "0.2.0"
   @project_url "https://github.com/podium/json_schema_nif"
 
   def project do
@@ -47,7 +47,7 @@ defmodule JsonSchemaNif.MixProject do
   defp deps do
     [
       {:rustler, "~> 0.37.1", optional: true},
-      {:rustler_precompiled, "~> 0.7"},
+      {:rustler_precompiled, "~> 0.9"},
 
       # test
       {:mix_test_watch, "~> 1.4.0", only: [:dev, :test], runtime: false},
