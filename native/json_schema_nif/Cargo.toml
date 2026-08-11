@@ -2,7 +2,7 @@
   authors = []
   edition = "2021"
   name = "json_schema_nif"
-  version = "0.1.1"
+  version = "0.2.0"
 
 [lib]
   crate-type = ["cdylib", "lib"]
@@ -10,7 +10,27 @@
   path = "src/lib.rs"
 
 [dependencies]
-  jsonschema = "0.17.1"
-  log = "0.4.20"
-  rustler = "0.30.0"
-  serde_json = "1.0.108"
+  jsonschema = "0.46.0"
+  log = "0.4.29"
+  rustler = { version = "0.37.3", default-features = false }
+  serde_json = "1.0.149"
+
+[features]
+default = ["nif_version_2_15"]
+nif_version_2_15 = ["rustler/nif_version_2_15"]
+nif_version_2_16 = ["rustler/nif_version_2_16"]
+nif_version_2_17 = ["rustler/nif_version_2_17"]
+
+# This is needed for "musl". See https://github.com/rust-lang/rust/issues/59302
+[target.x86_64-unknown-linux-musl]
+rustflags = [
+  "-C", "target-feature=-crt-static"
+]
+
+[target.aarch64-unknown-linux-musl]
+rustflags = [
+  "-C", "target-feature=-crt-static"
+]
+# Provides a small build size for the "release" profile, but takes more time to build.
+[profile.release]
+lto = true

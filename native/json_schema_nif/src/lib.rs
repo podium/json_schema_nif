@@ -92,4 +92,4 @@ fn validate_json(instance: String, schema: String) -> ValidationResult {
     }
 }
 
-rustler::init!("Elixir.JsonSchemaNif", [validate_json]);
+rustler::init!("Elixir.JsonSchemaNif");
